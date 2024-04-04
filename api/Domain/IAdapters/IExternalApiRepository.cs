@@ -13,6 +13,6 @@ namespace Domain.IAdapters
 
         Task<CurrentWeather> GetCurrentWeather(string lat, string lon, string apikey);
 
-        void Get5DaysWeatherForecast();
+        Task<WeatherForecastEntity> Get5DaysWeatherForecast(string lat, string lon, string apikey);
     }
 }

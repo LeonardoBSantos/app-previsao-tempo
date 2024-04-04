@@ -14,6 +14,7 @@ namespace Application
         public static void AddApplicationModule(this IServiceCollection services)
         {
             services.AddScoped<ICurrentWeatherService, CurrentWeatherService>();
+            services.AddScoped<IWeatherForecastService, WeatherForecastService>();
         }
 
     }

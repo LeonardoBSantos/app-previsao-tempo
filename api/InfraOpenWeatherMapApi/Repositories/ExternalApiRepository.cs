@@ -51,9 +51,15 @@ namespace InfraExternalApi.Repositories
             return currentWeather;
         }
 
-        public void Get5DaysWeatherForecast()
+        public async Task<WeatherForecastEntity> Get5DaysWeatherForecast(string lat, string lon, string apiKey)
         {
-            throw new NotImplementedException();
+            WeatherForecastEntity weatherForecast = null;
+            HttpResponseMessage response = await client.GetAsync($"data/2.5/forecast?lat={lat}&lon={lon}&appid={apiKey}&units=metric&lang=pt_br");
+            if (response.IsSuccessStatusCode)
+            {
+                weatherForecast = await response.Content.ReadAsAsync<WeatherForecastEntity>();
+            }
+            return weatherForecast;
         }
 
         private async static Task HttpClientInstanceInit()
