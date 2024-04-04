@@ -1,3 +1,4 @@
+using Domain.IServices;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WeatherForecastApi.Controllers
@@ -6,28 +7,28 @@ namespace WeatherForecastApi.Controllers
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    };
 
         private readonly ILogger<WeatherForecastController> _logger;
+        private readonly ICurrentWeatherService _currentWeatherService;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, ICurrentWeatherService currentWeatherService)
         {
             _logger = logger;
+            _currentWeatherService = currentWeatherService;
         }
 
-        [HttpGet(Name = "GetWeatherForecast")]
-        public IEnumerable<WeatherForecast> Get()
+        [HttpGet("/current")]
+        public IActionResult GetCurrentWeather([FromQuery] string cityName, [FromQuery] string apiKey)
         {
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            try
             {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            })
-            .ToArray();
+                var response = _currentWeatherService.GetCurrentWeather(cityName, apiKey);
+                return Ok(response);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
         }
     }
 }
