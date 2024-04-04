@@ -8,9 +8,12 @@ namespace Application.Model
 {
     public class CurrentWeatherModel
     {
-        public double temp { get; set; }
-        public int humidity { get; set; }
-        public string description { get; set; }
-        public double speed { get; set; }
+        public double temperatura { get; set; }
+
+        public int umidade { get; set; }
+
+        public string descricao { get; set; }
+
+        public double velocidade_do_vento { get; set; }
     }
 }

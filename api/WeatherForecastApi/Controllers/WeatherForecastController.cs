@@ -26,7 +26,14 @@ namespace WeatherForecastApi.Controllers
             try
             {
                 var response = _currentWeatherService.GetCurrentWeather(cityName, apiKey);
-                return Ok(response);
+                //return Ok(response);
+                return Ok(new CurrentWeatherModel
+                {
+                    descricao = response.description,
+                    temperatura = response.temp,
+                    umidade = response.humidity,
+                    velocidade_do_vento = response.speed
+                });
             }
             catch (Exception)
             {
