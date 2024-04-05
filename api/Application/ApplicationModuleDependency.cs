@@ -15,6 +15,7 @@ namespace Application
         {
             services.AddScoped<ICurrentWeatherService, CurrentWeatherService>();
             services.AddScoped<IWeatherForecastService, WeatherForecastService>();
+            services.AddScoped<ISearchHistoryService, SearchHistoryService>();
         }
 
     }

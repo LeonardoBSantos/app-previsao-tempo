@@ -1,4 +1,5 @@
 using Application;
+using InfraDataBase;
 using InfraExternalApi;
 
 namespace WeatherForecastApi
@@ -17,6 +18,7 @@ namespace WeatherForecastApi
             builder.Services.AddSwaggerGen();
             builder.Services.AddApplicationModule();
             builder.Services.addExternalApiModule();
+            builder.Services.addDataBaseModule();
 
             var app = builder.Build();
 

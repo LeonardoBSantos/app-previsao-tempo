@@ -12,14 +12,17 @@ namespace Application.Services
     public class CurrentWeatherService: ICurrentWeatherService
     {
         private readonly IExternalApiRepository _externalApiRepository;
+        private readonly ISearchHistoryService _searchHistoryService;
 
-        public CurrentWeatherService(IExternalApiRepository externalApiRepository)
+        public CurrentWeatherService(IExternalApiRepository externalApiRepository, ISearchHistoryService searchHistoryService)
         {
             _externalApiRepository = externalApiRepository;
+            _searchHistoryService = searchHistoryService;
         }
 
         public CurrentWeatherDto GetCurrentWeather(string cityName, string apiKey)
         {
+            _searchHistoryService.CreateHistory(cityName);
             var geocodingApiResponse = _externalApiRepository.GetGeocoding(cityName, apiKey);
             
             var lat = geocodingApiResponse.Result.ElementAt(0).lat.ToString();

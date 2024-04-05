@@ -12,12 +12,14 @@ namespace WeatherForecastApi.Controllers
         private readonly ILogger<WeatherForecastController> _logger;
         private readonly ICurrentWeatherService _currentWeatherService;
         private readonly IWeatherForecastService _weatherForecastService;
+        private readonly ISearchHistoryService _searchHistoryService;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger, ICurrentWeatherService currentWeatherService, IWeatherForecastService weatherForecastService)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, ICurrentWeatherService currentWeatherService, IWeatherForecastService weatherForecastService, ISearchHistoryService searchHistoryService)
         {
             _logger = logger;
             _currentWeatherService = currentWeatherService;
             _weatherForecastService = weatherForecastService;
+            _searchHistoryService = searchHistoryService;
         }
 
         [HttpGet("/current")]
@@ -64,6 +66,33 @@ namespace WeatherForecastApi.Controllers
                         });
                 }
                 return Ok(forecastViewModel);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpGet("/search_history")]
+        public IActionResult GetSearchHistory()
+        {
+            try
+            {
+                var response = _searchHistoryService.GetHistory();
+
+                var historyViewModel = new List<SearchHistoryModel>();
+                
+                foreach (var item in response)
+                {
+                    historyViewModel.Add(
+                        new SearchHistoryModel()
+                        {
+                           Cidade = item.city_name,
+                           Data = item.timestamp
+                        });
+                }
+
+                return Ok(historyViewModel);
             }
             catch (Exception)
             {

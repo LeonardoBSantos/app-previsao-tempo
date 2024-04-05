@@ -11,7 +11,7 @@ namespace Domain.IAdapters
     {
         Task<List<GeocodingEntity>> GetGeocoding(string cityName, string apiKey);
 
-        Task<CurrentWeather> GetCurrentWeather(string lat, string lon, string apikey);
+        Task<CurrentWeatherEntity> GetCurrentWeather(string lat, string lon, string apikey);
 
         Task<WeatherForecastEntity> Get5DaysWeatherForecast(string lat, string lon, string apikey);
     }

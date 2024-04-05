@@ -40,13 +40,13 @@ namespace InfraExternalApi.Repositories
            
         }
 
-        public async Task<CurrentWeather> GetCurrentWeather(string lat, string lon, string apiKey)
+        public async Task<CurrentWeatherEntity> GetCurrentWeather(string lat, string lon, string apiKey)
         {
-            CurrentWeather currentWeather = null;
+            CurrentWeatherEntity currentWeather = null;
             HttpResponseMessage response = await client.GetAsync($"data/2.5/weather?lat={lat}&lon={lon}&appid={apiKey}&units=metric&lang=pt_br");
             if (response.IsSuccessStatusCode)
             {
-                currentWeather = await response.Content.ReadAsAsync<CurrentWeather>();
+                currentWeather = await response.Content.ReadAsAsync<CurrentWeatherEntity>();
             }
             return currentWeather;
         }

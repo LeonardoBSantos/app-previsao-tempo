@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    public class CurrentWeather
+    public class CurrentWeatherEntity
     {
         [JsonProperty("coord")]
         public Coord coord { get; set; }
