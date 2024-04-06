@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InfraExternalApi", "InfraOp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InfraDataBase", "InfraDataBase\InfraDataBase.csproj", "{15FFD0B5-045B-4BEE-80C6-6B8D6A8434B7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InfraCacheDataBase", "InfraCacheDataBase\InfraCacheDataBase.csproj", "{AC6971EA-B8ED-441A-96C2-20FF8CA0ACDF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +59,10 @@ Global
 		{15FFD0B5-045B-4BEE-80C6-6B8D6A8434B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{15FFD0B5-045B-4BEE-80C6-6B8D6A8434B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{15FFD0B5-045B-4BEE-80C6-6B8D6A8434B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC6971EA-B8ED-441A-96C2-20FF8CA0ACDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC6971EA-B8ED-441A-96C2-20FF8CA0ACDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC6971EA-B8ED-441A-96C2-20FF8CA0ACDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC6971EA-B8ED-441A-96C2-20FF8CA0ACDF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -72,6 +78,7 @@ Global
 		{B7951DB0-0AA6-4CFA-A3BF-7F3FE40D0F67} = {5C771C08-9D7E-4AB5-9F8C-3FB0B8EB19B2}
 		{D614E1C9-C6A7-41D6-BD5E-3D68F14607B7} = {805F903F-88CE-4F99-A658-70CEEA6F1917}
 		{15FFD0B5-045B-4BEE-80C6-6B8D6A8434B7} = {805F903F-88CE-4F99-A658-70CEEA6F1917}
+		{AC6971EA-B8ED-441A-96C2-20FF8CA0ACDF} = {805F903F-88CE-4F99-A658-70CEEA6F1917}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2511EF6E-DA8B-43FC-B327-92064DA51EA6}

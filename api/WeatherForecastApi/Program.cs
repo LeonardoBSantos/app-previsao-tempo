@@ -1,4 +1,5 @@
 using Application;
+using InfraCacheDataBase;
 using InfraDataBase;
 using InfraExternalApi;
 
@@ -19,6 +20,7 @@ namespace WeatherForecastApi
             builder.Services.AddApplicationModule();
             builder.Services.addExternalApiModule();
             builder.Services.addDataBaseModule();
+            builder.Services.addCacheDbModule();
 
             var app = builder.Build();
 
