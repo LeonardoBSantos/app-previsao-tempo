@@ -38,6 +38,7 @@ namespace Application.Services
 
             return new CurrentWeatherDto
             {
+                cityName = geocodingApiResponse.ElementAt(0).name,
                 description = currentWeatherApiResponse.weather.ElementAt(0).description,
                 humidity = currentWeatherApiResponse.main.humidity,
                 temp = currentWeatherApiResponse.main.temp,

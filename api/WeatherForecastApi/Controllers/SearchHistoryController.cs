@@ -39,7 +39,7 @@ namespace WeatherForecastApi.Controllers
                 _logger.LogError(apex.Message);
                 return BadRequest(new ErrorModel()
                 {
-                    Message = apex.Message
+                    message = apex.Message
                 });
             }
             catch (Exception ex)
@@ -58,8 +58,8 @@ namespace WeatherForecastApi.Controllers
                 historyViewModel.Add(
                     new SearchHistoryModel()
                     {
-                        Cidade = item.city_name,
-                        Data = item.timestamp
+                        cidade = item.city_name,
+                        data = item.timestamp
                     });
             }
 

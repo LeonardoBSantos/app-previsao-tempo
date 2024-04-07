@@ -8,7 +8,7 @@ namespace Application.Model
 {
     public class SearchHistoryModel
     {
-        public string Cidade { get; set; }
-        public string Data { get; set; }
+        public string cidade { get; set; }
+        public string data { get; set; }
     }
 }

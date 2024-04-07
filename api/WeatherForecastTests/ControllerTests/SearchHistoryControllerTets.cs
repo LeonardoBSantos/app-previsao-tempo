@@ -43,8 +43,8 @@ namespace WeatherForecastTests.ControllerTests
             {
                 new SearchHistoryModel()
                 {
-                    Cidade = "London",
-                    Data = DateTimeOffset.Now.ToString()
+                    cidade = "London",
+                    data = DateTimeOffset.Now.ToString()
                 }
             };
 
@@ -59,8 +59,8 @@ namespace WeatherForecastTests.ControllerTests
             var okResult = Assert.IsType<OkObjectResult>(result);
             var view = Assert.IsType<List<SearchHistoryModel>>(okResult.Value);
             Assert.Equal(200, okResult.StatusCode);
-            Assert.Equal(expectedViewModel.ElementAt(0).Cidade, view.ElementAt(0).Cidade);
-            Assert.Equal(expectedViewModel.ElementAt(0).Data, view.ElementAt(0).Data);
+            Assert.Equal(expectedViewModel.ElementAt(0).cidade, view.ElementAt(0).cidade);
+            Assert.Equal(expectedViewModel.ElementAt(0).data, view.ElementAt(0).data);
 
         }
 
@@ -71,7 +71,7 @@ namespace WeatherForecastTests.ControllerTests
             var expectedException = new Exception("Erro ao obter histórico");
             var expectedResponse = new ObjectResult(new ErrorModel()
             {
-                Message = expectedException.Message
+                message = expectedException.Message
             });
 
             _searchHistoryServiceMock.Setup(x => x.GetHistory()).Throws(expectedException);

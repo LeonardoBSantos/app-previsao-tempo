@@ -38,6 +38,7 @@ namespace WeatherForecastTests.ControllerTests
             string apiKey = "key";
             var expectedJsonResponse = new WeatherForecastDto()
             {
+                city_name = cityName,
                 list = new List<ListData>()
                 {
                     new ListData()
@@ -52,6 +53,7 @@ namespace WeatherForecastTests.ControllerTests
             };
             var expectedViewModel = new WeatherForecastModel()
             {
+                cidade = cityName,
                 listaDePrevisoes = new List<Previsao>()
                 {
                     new Previsao()
@@ -76,6 +78,7 @@ namespace WeatherForecastTests.ControllerTests
             var okResult = Assert.IsType<OkObjectResult>(result.Result);
             var view = Assert.IsType<WeatherForecastModel>(okResult.Value);
             Assert.Equal(200, okResult.StatusCode);
+            Assert.Equal(expectedViewModel.cidade, view.cidade);
             Assert.Equal(expectedViewModel.listaDePrevisoes.ElementAt(0).descricao, view.listaDePrevisoes.ElementAt(0).descricao);
             Assert.Equal(expectedViewModel.listaDePrevisoes.ElementAt(0).umidade, view.listaDePrevisoes.ElementAt(0).umidade);
             Assert.Equal(expectedViewModel.listaDePrevisoes.ElementAt(0).velocidade_do_vento, view.listaDePrevisoes.ElementAt(0).velocidade_do_vento);
@@ -92,6 +95,7 @@ namespace WeatherForecastTests.ControllerTests
             string apiKey = "key";
             var cachedJsonResponse = new WeatherForecastModel()
             {
+                cidade = cityName,
                 listaDePrevisoes = new List<Previsao>()
                 {
                     new Previsao()

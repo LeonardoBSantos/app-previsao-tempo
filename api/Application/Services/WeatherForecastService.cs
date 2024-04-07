@@ -30,10 +30,10 @@ namespace Application.Services
             var weatherForecastResponse = await _externalApiRepository.Get5DaysWeatherForecastAsync(lat, lon, apiKey);
 
             var listOf5DaysForecast = new WeatherForecastDto();
+            listOf5DaysForecast.city_name = geocodingApiResponse.ElementAt(0).name;
             listOf5DaysForecast.list = new List<ListData>();
 
             foreach (var weatherForecast in weatherForecastResponse.list)
-
             {
                 listOf5DaysForecast.list.Add(
                     new ListData

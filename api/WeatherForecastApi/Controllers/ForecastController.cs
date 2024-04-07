@@ -62,7 +62,7 @@ namespace WeatherForecastApi.Controllers
                 _logger.LogError(apex.Message);
                 return BadRequest(new ErrorModel()
                 {
-                    Message = apex.Message
+                    message = apex.Message
                 });
             }
             catch (Exception ex)
@@ -75,6 +75,8 @@ namespace WeatherForecastApi.Controllers
         private WeatherForecastModel MapToWeatherForecastViewModel(WeatherForecastDto response)
         {
             var forecastViewModel = new WeatherForecastModel();
+            forecastViewModel.cidade = response.city_name;
+            forecastViewModel.unidades_de_medida = "Sistema Métrico";
             forecastViewModel.listaDePrevisoes = new List<Previsao>();
 
             foreach (var item in response.list)

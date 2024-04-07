@@ -8,6 +8,8 @@ namespace Application.Model
 {
     public class WeatherForecastModel
     {
+        public string cidade { get; set; }
+        public string unidades_de_medida { get; set; }
         public List<Previsao> listaDePrevisoes { get; set; }
     }
 

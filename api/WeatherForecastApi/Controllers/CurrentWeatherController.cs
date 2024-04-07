@@ -61,7 +61,7 @@ namespace WeatherForecastApi.Controllers
                 _logger.LogError(apex.Message);
                 return BadRequest(new ErrorModel()
                 {
-                    Message = apex.Message
+                    message = apex.Message
                 });
             }
             catch (Exception ex)
@@ -75,10 +75,12 @@ namespace WeatherForecastApi.Controllers
         {
             return new CurrentWeatherModel
             {
+                cidade = response.cityName,
                 descricao = response.description,
                 temperatura = response.temp,
                 umidade = response.humidity,
-                velocidade_do_vento = response.speed
+                velocidade_do_vento = response.speed,
+                unidades_de_medida = "Sistema Métrico"
             };
         }
     }

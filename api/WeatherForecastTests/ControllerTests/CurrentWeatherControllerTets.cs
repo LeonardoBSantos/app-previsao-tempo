@@ -33,6 +33,7 @@ namespace WeatherForecastTests.ControllerTests
             string apiKey = "key";
             var expectedJsonResponse = new CurrentWeatherDto()
             {
+                cityName = "London",
                 description = "nublado",
                 humidity = 14,
                 speed = 5.0,
@@ -40,6 +41,7 @@ namespace WeatherForecastTests.ControllerTests
             };
             var expectedViewModel = new CurrentWeatherModel()
             {
+                cidade = "London",
                 descricao = "nublado",
                 umidade = 14,
                 velocidade_do_vento = 5.0,
@@ -57,6 +59,7 @@ namespace WeatherForecastTests.ControllerTests
             var okResult = Assert.IsType<OkObjectResult>(result.Result);
             var view = Assert.IsType<CurrentWeatherModel>(okResult.Value);
             Assert.Equal(200, okResult.StatusCode);
+            Assert.Equal(expectedViewModel.cidade, view.cidade);
             Assert.Equal(expectedViewModel.descricao, view.descricao);
             Assert.Equal(expectedViewModel.umidade, view.umidade);
             Assert.Equal(expectedViewModel.velocidade_do_vento, view.velocidade_do_vento);
@@ -72,6 +75,7 @@ namespace WeatherForecastTests.ControllerTests
             string apiKey = "key";
             var cachedJsonResponse = new CurrentWeatherModel()
             {
+                cidade = "London",
                 descricao = "nublado",
                 umidade = 14,
                 velocidade_do_vento = 5.0,
@@ -98,7 +102,7 @@ namespace WeatherForecastTests.ControllerTests
             var expectedException = new ApplicationException("Cidade não encontrada, tente novamente.");
             var expectedResponse = new BadRequestObjectResult(new ErrorModel()
             {
-                Message = expectedException.Message
+                message = expectedException.Message
             });
 
             _cacheServiceMock.Setup(x => x.ReadCacheAsync(cityName, It.IsAny<string>())).Throws(expectedException);
@@ -110,7 +114,6 @@ namespace WeatherForecastTests.ControllerTests
             Assert.IsType<BadRequestObjectResult>(result.Result);
             var badRequestResult = Assert.IsType<BadRequestObjectResult>(result.Result);
             Assert.Equal(400, badRequestResult.StatusCode);
-            //Assert.Equal(expectedResponse.Value, badRequestResult.Value);
         }
     }
 }

@@ -8,6 +8,8 @@ namespace Domain.DTO
 {
     public class WeatherForecastDto
     {
+        public string city_name { get; set; }
+
         public List<ListData> list { get; set; }
     }
 
