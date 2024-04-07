@@ -42,6 +42,7 @@ namespace WeatherForecastApi.Controllers
                 var currentWeatherCache = await _cacheService.ReadCacheAsync(cityName, Endpoint_NAME);
                 if (currentWeatherCache is null)
                 {
+                    _logger.LogInformation("Clima atual obtido por consumo de API");
                     var response = await _currentWeatherService.GetCurrentWeatherAsync(cityName, apiKey);
                     var currentWeather = mapToCurrentWeatherViewModel(response);
                     _cacheService.WriteCacheAsync(cityName, JsonConvert.SerializeObject(currentWeather), Endpoint_NAME);
@@ -50,12 +51,14 @@ namespace WeatherForecastApi.Controllers
                 }
                 else
                 {
+                    _logger.LogInformation("Clima atual obtido do Cache");
                     return Ok(currentWeatherCache);
                 }
 
             }
             catch (ApplicationException apex)
             {
+                _logger.LogError(apex.Message);
                 return BadRequest(new ErrorModel()
                 {
                     Message = apex.Message
@@ -63,6 +66,7 @@ namespace WeatherForecastApi.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex.Message);
                 return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
             }
         }

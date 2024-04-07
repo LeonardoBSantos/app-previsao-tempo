@@ -36,6 +36,7 @@ namespace WeatherForecastApi.Controllers
             }
             catch (ApplicationException apex)
             {
+                _logger.LogError(apex.Message);
                 return BadRequest(new ErrorModel()
                 {
                     Message = apex.Message
@@ -43,6 +44,7 @@ namespace WeatherForecastApi.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex.Message);
                 return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
             }
         }

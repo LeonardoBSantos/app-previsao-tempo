@@ -46,6 +46,17 @@ namespace InfraCacheDataBase.Repositories
             }
         }
 
+        public async Task CleanCacheDb()
+        {
+            var currentTable = _dbContext.Set<CurrentCacheEntity>();
+            var forecastTable = _dbContext.Set<ForecastCacheEntity>();
+
+            currentTable.RemoveRange(currentTable);
+            forecastTable.RemoveRange(forecastTable);
+
+            _dbContext.SaveChanges();
+        }
+
         private void WriteToCurrentAsync(string cityName, string cacheData)
         {
             try

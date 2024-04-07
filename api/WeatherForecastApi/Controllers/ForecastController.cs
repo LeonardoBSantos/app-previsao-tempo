@@ -37,12 +37,14 @@ namespace WeatherForecastApi.Controllers
         {
             try
             {
-                _logger.LogInformation("Controller previsão do clima para 5 dias");
                 EntryPointValidations.ValidateCityName(cityName);
                 _searchHistoryService.CreateHistoryAsync(cityName);
+                
                 var forecastWeatherCache = await _cacheService.ReadCacheAsync(cityName, Endpoint_NAME);
                 if (forecastWeatherCache is null)
                 {
+                    _logger.LogInformation("Clima Previsto obtido por consumo de API");
+                    
                     var response = await _weatherForecastService.Get5DaysForecastAsync(cityName, apiKey);
                     WeatherForecastModel forecastWeather = MapToWeatherForecastViewModel(response);
                     _cacheService.WriteCacheAsync(cityName, JsonConvert.SerializeObject(forecastWeather), Endpoint_NAME);
@@ -51,11 +53,13 @@ namespace WeatherForecastApi.Controllers
                 }
                 else
                 {
+                    _logger.LogInformation("Clima Previsto obtido do cache");
                     return Ok(forecastWeatherCache);
                 }
             }
             catch (ApplicationException apex)
             {
+                _logger.LogError(apex.Message);
                 return BadRequest(new ErrorModel()
                 {
                     Message = apex.Message
@@ -63,6 +67,7 @@ namespace WeatherForecastApi.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex.Message);
                 return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
             }
         }

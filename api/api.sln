@@ -15,19 +15,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Driven", "Driven", "{805F90
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Driving", "Driving", "{5C771C08-9D7E-4AB5-9F8C-3FB0B8EB19B2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{090D2468-4077-4A29-9B92-50B813CFF77D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Application\Application.csproj", "{090D2468-4077-4A29-9B92-50B813CFF77D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{4C10A0E3-A331-4FA6-8A95-8663D61B2048}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{4C10A0E3-A331-4FA6-8A95-8663D61B2048}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeatherForecastTests", "WeatherForecastTests\WeatherForecastTests.csproj", "{1EE46CC0-89BE-4D60-AF99-8568E6708442}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeatherForecastTests", "WeatherForecastTests\WeatherForecastTests.csproj", "{1EE46CC0-89BE-4D60-AF99-8568E6708442}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeatherForecastApi", "WeatherForecastApi\WeatherForecastApi.csproj", "{B7951DB0-0AA6-4CFA-A3BF-7F3FE40D0F67}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeatherForecastApi", "WeatherForecastApi\WeatherForecastApi.csproj", "{B7951DB0-0AA6-4CFA-A3BF-7F3FE40D0F67}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InfraExternalApi", "InfraOpenWeatherMapApi\InfraExternalApi.csproj", "{D614E1C9-C6A7-41D6-BD5E-3D68F14607B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InfraExternalApi", "InfraOpenWeatherMapApi\InfraExternalApi.csproj", "{D614E1C9-C6A7-41D6-BD5E-3D68F14607B7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InfraDataBase", "InfraDataBase\InfraDataBase.csproj", "{15FFD0B5-045B-4BEE-80C6-6B8D6A8434B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InfraDataBase", "InfraDataBase\InfraDataBase.csproj", "{15FFD0B5-045B-4BEE-80C6-6B8D6A8434B7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InfraCacheDataBase", "InfraCacheDataBase\InfraCacheDataBase.csproj", "{AC6971EA-B8ED-441A-96C2-20FF8CA0ACDF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InfraCacheDataBase", "InfraCacheDataBase\InfraCacheDataBase.csproj", "{AC6971EA-B8ED-441A-96C2-20FF8CA0ACDF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimedCacheClearing", "TimedCacheClearing\TimedCacheClearing.csproj", "{7A8EA84A-AAAF-4E88-8D05-5AB665B54ABE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{AC6971EA-B8ED-441A-96C2-20FF8CA0ACDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC6971EA-B8ED-441A-96C2-20FF8CA0ACDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AC6971EA-B8ED-441A-96C2-20FF8CA0ACDF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A8EA84A-AAAF-4E88-8D05-5AB665B54ABE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A8EA84A-AAAF-4E88-8D05-5AB665B54ABE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A8EA84A-AAAF-4E88-8D05-5AB665B54ABE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A8EA84A-AAAF-4E88-8D05-5AB665B54ABE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -79,6 +85,7 @@ Global
 		{D614E1C9-C6A7-41D6-BD5E-3D68F14607B7} = {805F903F-88CE-4F99-A658-70CEEA6F1917}
 		{15FFD0B5-045B-4BEE-80C6-6B8D6A8434B7} = {805F903F-88CE-4F99-A658-70CEEA6F1917}
 		{AC6971EA-B8ED-441A-96C2-20FF8CA0ACDF} = {805F903F-88CE-4F99-A658-70CEEA6F1917}
+		{7A8EA84A-AAAF-4E88-8D05-5AB665B54ABE} = {5C771C08-9D7E-4AB5-9F8C-3FB0B8EB19B2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2511EF6E-DA8B-43FC-B327-92064DA51EA6}
