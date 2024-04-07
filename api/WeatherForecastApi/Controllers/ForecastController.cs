@@ -14,15 +14,14 @@ namespace WeatherForecastApi.Controllers
     public class ForecastController : ControllerBase
     {
         private const string Endpoint_NAME = "forecast";
-        private readonly ILogger<CurrentWeatherController> _logger;
+        private readonly ILogger<ForecastController> _logger;
         private readonly IWeatherForecastService _weatherForecastService;
         private readonly ICacheService<WeatherForecastModel> _cacheService;
         private readonly ISearchHistoryService _searchHistoryService;
 
 
         public ForecastController(
-            ILogger<CurrentWeatherController> logger, 
-            ICurrentWeatherService currentWeatherService, 
+            ILogger<ForecastController> logger,  
             IWeatherForecastService weatherForecastService, 
             ISearchHistoryService searchHistoryService,
             ICacheService<WeatherForecastModel> cacheService)
@@ -38,6 +37,7 @@ namespace WeatherForecastApi.Controllers
         {
             try
             {
+                _logger.LogInformation("Controller previsão do clima para 5 dias");
                 EntryPointValidations.ValidateCityName(cityName);
                 _searchHistoryService.CreateHistoryAsync(cityName);
                 var forecastWeatherCache = await _cacheService.ReadCacheAsync(cityName, Endpoint_NAME);

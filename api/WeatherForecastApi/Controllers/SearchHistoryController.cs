@@ -3,6 +3,7 @@ using Domain.DTO;
 using Domain.IServices;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Net;
 using System.Text.RegularExpressions;
 
 namespace WeatherForecastApi.Controllers
@@ -12,18 +13,15 @@ namespace WeatherForecastApi.Controllers
     public class SearchHistoryController : ControllerBase
     {
         private const string Endpoint_NAME = "history";
-        private readonly ILogger<CurrentWeatherController> _logger;
+        private readonly ILogger<SearchHistoryController> _logger;
         private readonly ISearchHistoryService _searchHistoryService;
-        private readonly ICacheService<CurrentWeatherModel> _cacheService;
 
         public SearchHistoryController(
-            ILogger<CurrentWeatherController> logger, 
-            ISearchHistoryService searchHistoryService,
-            ICacheService<CurrentWeatherModel> cacheService)
+            ILogger<SearchHistoryController> logger, 
+            ISearchHistoryService searchHistoryService)
         {
             _logger = logger;
             _searchHistoryService = searchHistoryService;
-            _cacheService = cacheService;
         }
 
         [HttpGet("/search_history")]
@@ -36,9 +34,16 @@ namespace WeatherForecastApi.Controllers
 
                 return Ok(history);
             }
-            catch (Exception)
+            catch (ApplicationException apex)
             {
-                return BadRequest();
+                return BadRequest(new ErrorModel()
+                {
+                    Message = apex.Message
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
             }
         }
 

@@ -1,15 +1,7 @@
 ﻿using Domain.IServices;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WeatherForecastApi.Controllers;
-using System;
 using Microsoft.AspNetCore.Mvc;
-using Moq;
-using Xunit;
 using Application.Model;
 using Microsoft.Extensions.Logging;
 using Domain.DTO;
@@ -97,25 +89,29 @@ namespace WeatherForecastTests.ControllerTests
             Assert.Equal(200, okResult.StatusCode);
         }
 
-        //[Fact]
-        //public void GetCurrentWeather_ReturnsBadRequest_When_ExceptionOccurs()
-        //{
-        //    // Arrange
-        //    string cityName = "InvalidCityName";
-        //    string apiKey = "your-api-key";
-        //    var expectedException = new Exception("Invalid city name provided.");
+        [Fact]
+        public void GetCurrentWeather_ReturnsBadRequest_When_ExceptionOccurs()
+        {
+            // Arrange
+            string cityName = ".";
+            string apiKey = "key";
+            var expectedException = new ApplicationException("Cidade não encontrada, tente novamente.");
+            var expectedResponse = new BadRequestObjectResult(new ErrorModel()
+            {
+                Message = expectedException.Message
+            });
 
-        //    _cacheServiceMock.Setup(x => x.ReadCache(cityName, It.IsAny<string>())).Throws(expectedException);
+            _cacheServiceMock.Setup(x => x.ReadCacheAsync(cityName, It.IsAny<string>())).Throws(expectedException);
 
-        //    // Act
-        //    var result = _currentWeatherController.GetCurrentWeather(cityName, apiKey);
+            // Act
+            var result = _currentWeatherController.GetCurrentWeather(cityName, apiKey);
 
-        //    // Assert
-        //    Assert.IsType<BadRequestObjectResult>(result);
-        //    var badRequestResult = Assert.IsType<BadRequestObjectResult>(result);
-        //    Assert.Equal(400, badRequestResult.StatusCode);
-        //    Assert.Equal(expectedException.Message, badRequestResult.Value);
-        //}
+            // Assert
+            Assert.IsType<BadRequestObjectResult>(result.Result);
+            var badRequestResult = Assert.IsType<BadRequestObjectResult>(result.Result);
+            Assert.Equal(400, badRequestResult.StatusCode);
+            //Assert.Equal(expectedResponse.Value, badRequestResult.Value);
+        }
     }
 }
 
