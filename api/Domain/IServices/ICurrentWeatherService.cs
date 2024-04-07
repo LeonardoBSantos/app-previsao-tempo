@@ -9,6 +9,6 @@ namespace Domain.IServices
 {
     public interface ICurrentWeatherService
     {
-        CurrentWeatherDto GetCurrentWeather(string cityName, string apiKey);
+        Task<CurrentWeatherDto> GetCurrentWeatherAsync(string cityName, string apiKey);
     }
 }

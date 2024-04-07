@@ -21,20 +21,19 @@ namespace Application.Services
             _searchHistoryService = searchHistoryService;
         }
 
-        public T? ReadCache(string? cityName, string endpoint)
+        public async Task<T>? ReadCacheAsync(string? cityName, string endpoint)
         {
-            var cacheDataString = _cacheRepository.ReadCache(cityName, endpoint);
+            var cacheDataString = await _cacheRepository.ReadCacheAsync(cityName, endpoint);
             if (!String.IsNullOrEmpty(cacheDataString))
             {
-                _searchHistoryService.CreateHistory(cityName);
                 return JsonConvert.DeserializeObject<T>(cacheDataString);
             }
             return default(T);
         }
 
-        public async Task WriteCache(string? cityName, string cacheData, string endpoint)
+        public async Task WriteCacheAsync(string? cityName, string cacheData, string endpoint)
         {
-            _cacheRepository.WriteCache(cityName.ToLower(), cacheData, endpoint);
+            _cacheRepository.WriteCacheAsync(cityName.ToLower(), cacheData, endpoint);
         }
     }
 }

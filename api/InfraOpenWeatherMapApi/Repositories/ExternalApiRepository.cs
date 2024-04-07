@@ -19,12 +19,10 @@ namespace InfraExternalApi.Repositories
             HttpClientInstanceInit();
         }
 
-        public async Task<List<GeocodingEntity>> GetGeocoding(string cityName, string apiKey)
+        public async Task<List<GeocodingEntity>>? GetGeocodingAsync(string cityName, string apiKey)
         {
             try
             {
-                //HttpClientInstanceInit();
-
                 List<GeocodingEntity> geocodingList = null;
                 HttpResponseMessage response = await client.GetAsync($"geo/1.0/direct?q={cityName}&limit=1&appid={apiKey}");
                 if (response.IsSuccessStatusCode)
@@ -33,14 +31,14 @@ namespace InfraExternalApi.Repositories
                 }
                 return geocodingList;
             }
-            catch(Exception ex)
+            catch(Exception)
             {
-                throw;
+                return null;
             }
            
         }
 
-        public async Task<CurrentWeatherEntity> GetCurrentWeather(string lat, string lon, string apiKey)
+        public async Task<CurrentWeatherEntity> GetCurrentWeatherAsync(string lat, string lon, string apiKey)
         {
             CurrentWeatherEntity currentWeather = null;
             HttpResponseMessage response = await client.GetAsync($"data/2.5/weather?lat={lat}&lon={lon}&appid={apiKey}&units=metric&lang=pt_br");
@@ -51,7 +49,7 @@ namespace InfraExternalApi.Repositories
             return currentWeather;
         }
 
-        public async Task<WeatherForecastEntity> Get5DaysWeatherForecast(string lat, string lon, string apiKey)
+        public async Task<WeatherForecastEntity> Get5DaysWeatherForecastAsync(string lat, string lon, string apiKey)
         {
             WeatherForecastEntity weatherForecast = null;
             HttpResponseMessage response = await client.GetAsync($"data/2.5/forecast?lat={lat}&lon={lon}&appid={apiKey}&units=metric&lang=pt_br");

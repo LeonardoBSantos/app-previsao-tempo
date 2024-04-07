@@ -11,6 +11,6 @@ namespace Domain.IServices
     {
         List<SearchHistoryDto> GetHistory();
 
-        Task CreateHistory(string cityName);
+        Task CreateHistoryAsync(string cityName);
     }
 }

@@ -8,7 +8,7 @@ namespace Domain.IServices
 {
     public interface ICacheService<T>
     {
-        T ReadCache(string? cityName, string endpoint);
-        Task WriteCache(string? cityName, string cacheData, string endpoint);
+        Task<T> ReadCacheAsync(string? cityName, string endpoint);
+        Task WriteCacheAsync(string? cityName, string cacheData, string endpoint);
     }
 }

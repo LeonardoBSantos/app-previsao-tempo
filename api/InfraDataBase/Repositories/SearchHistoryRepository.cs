@@ -17,13 +17,13 @@ namespace InfraDataBase.Repositories
             this._context = new ApplicationDbContext();
         }
 
-        public async Task CreateHistory(SearchHistoryEntity entity)
+        public async Task CreateHistoryAsync(SearchHistoryEntity entity)
         {
             try
             {
-                _context.searchHistoryEntity.Add(entity);
+                _context.searchHistoryEntity.AddAsync(entity);
 
-                _context.SaveChanges();
+                _context.SaveChangesAsync();
             }
             catch (Exception ex)
             {

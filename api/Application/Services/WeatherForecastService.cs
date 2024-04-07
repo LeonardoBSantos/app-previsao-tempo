@@ -20,20 +20,19 @@ namespace Application.Services
             _searchHistoryService = searchHistoryService;
         }
 
-        public WeatherForecastDto Get5DaysForecast(string cityName, string apiKey)
+        public async Task<WeatherForecastDto> Get5DaysForecastAsync(string cityName, string apiKey)
         {
-            _searchHistoryService.CreateHistory(cityName);
-            var geocodingApiResponse = _externalApiRepository.GetGeocoding(cityName, apiKey);
+            var geocodingApiResponse = await _externalApiRepository.GetGeocodingAsync(cityName, apiKey);
 
-            var lat = geocodingApiResponse.Result.ElementAt(0).lat.ToString();
-            var lon = geocodingApiResponse.Result.ElementAt(0).lon.ToString();
+            var lat = geocodingApiResponse.ElementAt(0).lat.ToString();
+            var lon = geocodingApiResponse.ElementAt(0).lon.ToString();
 
-            var weatherForecastResponse = _externalApiRepository.Get5DaysWeatherForecast(lat, lon, apiKey);
+            var weatherForecastResponse = await _externalApiRepository.Get5DaysWeatherForecastAsync(lat, lon, apiKey);
 
             var listOf5DaysForecast = new WeatherForecastDto();
             listOf5DaysForecast.list = new List<ListData>();
 
-            foreach (var weatherForecast in weatherForecastResponse.Result.list)
+            foreach (var weatherForecast in weatherForecastResponse.list)
 
             {
                 listOf5DaysForecast.list.Add(

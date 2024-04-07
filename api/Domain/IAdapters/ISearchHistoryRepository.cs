@@ -9,7 +9,7 @@ namespace Domain.IAdapters
 {
     public interface ISearchHistoryRepository
     {
-        Task CreateHistory(SearchHistoryEntity entity);
+        Task CreateHistoryAsync(SearchHistoryEntity entity);
         List<SearchHistoryEntity> GetHistory();
     }
 }

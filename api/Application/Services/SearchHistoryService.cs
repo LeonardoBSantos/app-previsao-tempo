@@ -36,7 +36,7 @@ namespace Application.Services
             return historyDto;
         }
 
-        public async Task CreateHistory(string cityName)
+        public async Task CreateHistoryAsync(string cityName)
         {
             var entity = new SearchHistoryEntity()
             {
@@ -44,7 +44,7 @@ namespace Application.Services
                 timestamp = DateTimeOffset.Now.ToString()
             };
 
-            _searchHistoryRepository.CreateHistory(entity);
+            _searchHistoryRepository.CreateHistoryAsync(entity);
         }
     }
 }

@@ -3,7 +3,9 @@ using Domain.DTO;
 using Domain.IServices;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Net;
 using System.Text.RegularExpressions;
+using WeatherForecastApi.Utils;
 
 namespace WeatherForecastApi.Controllers
 {
@@ -15,6 +17,8 @@ namespace WeatherForecastApi.Controllers
         private readonly ILogger<CurrentWeatherController> _logger;
         private readonly IWeatherForecastService _weatherForecastService;
         private readonly ICacheService<WeatherForecastModel> _cacheService;
+        private readonly ISearchHistoryService _searchHistoryService;
+
 
         public ForecastController(
             ILogger<CurrentWeatherController> logger, 
@@ -26,20 +30,22 @@ namespace WeatherForecastApi.Controllers
             _logger = logger;
             _weatherForecastService = weatherForecastService;
             _cacheService = cacheService;
+            _searchHistoryService = searchHistoryService;
         }
 
         [HttpGet("/5DaysWeatherForecast")]
-        public IActionResult Get5DaysWeatherForecast([FromQuery] string cityName, [FromQuery] string apiKey)
+        public async Task<IActionResult> Get5DaysWeatherForecast([FromQuery] string cityName, [FromQuery] string apiKey)
         {
             try
             {
-                var city = Regex.Replace(cityName, @"[^\w\s]", "");
-                var forecastWeatherCache = _cacheService.ReadCache(city, Endpoint_NAME);
+                EntryPointValidations.ValidateCityName(cityName);
+                _searchHistoryService.CreateHistoryAsync(cityName);
+                var forecastWeatherCache = await _cacheService.ReadCacheAsync(cityName, Endpoint_NAME);
                 if (forecastWeatherCache is null)
                 {
-                    var response = _weatherForecastService.Get5DaysForecast(cityName, apiKey);
+                    var response = await _weatherForecastService.Get5DaysForecastAsync(cityName, apiKey);
                     WeatherForecastModel forecastWeather = MapToWeatherForecastViewModel(response);
-                    _cacheService.WriteCache(city, JsonConvert.SerializeObject(forecastWeather), Endpoint_NAME);
+                    _cacheService.WriteCacheAsync(cityName, JsonConvert.SerializeObject(forecastWeather), Endpoint_NAME);
 
                     return Ok(forecastWeather);
                 }
@@ -48,9 +54,16 @@ namespace WeatherForecastApi.Controllers
                     return Ok(forecastWeatherCache);
                 }
             }
-            catch (Exception)
+            catch (ApplicationException apex)
             {
-                return BadRequest();
+                return BadRequest(new ErrorModel()
+                {
+                    Message = apex.Message
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
             }
         }
 

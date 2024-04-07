@@ -20,21 +20,28 @@ namespace Application.Services
             _searchHistoryService = searchHistoryService;
         }
 
-        public CurrentWeatherDto GetCurrentWeather(string cityName, string apiKey)
+        public async Task<CurrentWeatherDto> GetCurrentWeatherAsync(string cityName, string apiKey)
         {
-            _searchHistoryService.CreateHistory(cityName);
-            var geocodingApiResponse = _externalApiRepository.GetGeocoding(cityName, apiKey);
-            
-            var lat = geocodingApiResponse.Result.ElementAt(0).lat.ToString();
-            var lon = geocodingApiResponse.Result.ElementAt(0).lon.ToString();
+            var geocodingApiResponse = await _externalApiRepository.GetGeocodingAsync(cityName, apiKey);
+            if (geocodingApiResponse is null)
+            {
+                throw new ApplicationException("Erro ao obter geolocalização");
+            }
 
-            var currentWeatherApiResponse = _externalApiRepository.GetCurrentWeather(lat, lon, apiKey);
+            var lat = geocodingApiResponse.ElementAt(0).lat.ToString();
+            var lon = geocodingApiResponse.ElementAt(0).lon.ToString();
+            var currentWeatherApiResponse = await _externalApiRepository.GetCurrentWeatherAsync(lat, lon, apiKey);
+            if (currentWeatherApiResponse is null)
+            {
+                throw new ApplicationException("Erro ao obter clima atual");
+            }
+
             return new CurrentWeatherDto
             {
-                description = currentWeatherApiResponse.Result.weather.ElementAt(0).description,
-                humidity = currentWeatherApiResponse.Result.main.humidity,
-                temp = currentWeatherApiResponse.Result.main.temp,
-                speed = currentWeatherApiResponse.Result.wind.speed
+                description = currentWeatherApiResponse.weather.ElementAt(0).description,
+                humidity = currentWeatherApiResponse.main.humidity,
+                temp = currentWeatherApiResponse.main.temp,
+                speed = currentWeatherApiResponse.wind.speed
             };
         }
     }

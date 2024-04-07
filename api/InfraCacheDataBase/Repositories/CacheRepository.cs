@@ -17,46 +17,46 @@ namespace InfraCacheDataBase.Repositories
             _dbContext = new CacheDbContext();
         }
 
-        public string? ReadCache(string? cityName, string endpoint)
+        public async Task<string>? ReadCacheAsync(string? cityName, string endpoint)
         {
             switch (endpoint)
             {
                 case "current":
-                    var currentCache = ReadFromCurrent(cityName);
-                    return currentCache is null ? null: currentCache.CacheData;
+                    var currentCache = await ReadFromCurrentAsync(cityName);
+                    return currentCache?.CacheData;
                 case "forecast":
-                    var forecastCache = ReadFromForecast(cityName);
-                    return forecastCache is null ? null : forecastCache.CacheData;
+                    var forecastCache = await ReadFromForecastAsync(cityName);
+                    return forecastCache?.CacheData;
                 default:
                     return null;
                     break;
             }
         }
 
-        public async Task WriteCache(string? cityName, string cacheData, string endpoint)
+        public async Task WriteCacheAsync(string? cityName, string cacheData, string endpoint)
         {
             switch (endpoint)
             {
                 case "current":
-                    WriteToCurrent(cityName, cacheData);
+                    WriteToCurrentAsync(cityName, cacheData);
                     break;
                 case "forecast":
-                    WriteToForecast(cityName, cacheData);
+                    WriteToForecastAsync(cityName, cacheData);
                     break;
             }
         }
 
-        private void WriteToCurrent(string cityName, string cacheData)
+        private void WriteToCurrentAsync(string cityName, string cacheData)
         {
             try
             {
-                _dbContext.current.Add(new CurrentCacheEntity()
+                _dbContext.current.AddAsync(new CurrentCacheEntity()
                 {
                     CityName = cityName,
                     CacheData = cacheData
                 });
 
-                _dbContext.SaveChanges();
+                _dbContext.SaveChangesAsync();
             }
             catch (Exception ex)
             {
@@ -64,17 +64,17 @@ namespace InfraCacheDataBase.Repositories
             }
         }
 
-        private void WriteToForecast(string cityName, string cacheData)
+        private async Task WriteToForecastAsync(string cityName, string cacheData)
         {
             try
             {
-                _dbContext.forecast.Add(new ForecastCacheEntity()
+                _dbContext.forecast.AddAsync(new ForecastCacheEntity()
                 {
                     CityName = cityName,
                     CacheData = cacheData
                 });
 
-                _dbContext.SaveChanges();
+                _dbContext.SaveChangesAsync();
             }
             catch (Exception ex)
             {
@@ -82,15 +82,15 @@ namespace InfraCacheDataBase.Repositories
             }
         }
 
-        private CacheEntity ReadFromCurrent(string cityName)
+        private async Task<CacheEntity> ReadFromCurrentAsync(string cityName)
         {
-            var cacheEntity = _dbContext.current.Find(cityName);
+            var cacheEntity = await _dbContext.current.FindAsync(cityName);
             return cacheEntity;
         }
 
-        private CacheEntity ReadFromForecast(string cityName)
+        private async Task<CacheEntity> ReadFromForecastAsync(string cityName)
         {
-            var cacheEntity = _dbContext.forecast.Find(cityName);
+            var cacheEntity = await _dbContext.forecast.FindAsync(cityName);
             return cacheEntity;
         }
     }

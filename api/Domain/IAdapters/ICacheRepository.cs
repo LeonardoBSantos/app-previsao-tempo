@@ -8,7 +8,7 @@ namespace Domain.IAdapters
 {
     public interface ICacheRepository
     {
-        string ReadCache(string? cityName, string endpoint);
-        Task WriteCache(string? cityName, string cacheData, string endpoint);
+        Task<string> ReadCacheAsync(string? cityName, string endpoint);
+        Task WriteCacheAsync(string? cityName, string cacheData, string endpoint);
     }
 }
