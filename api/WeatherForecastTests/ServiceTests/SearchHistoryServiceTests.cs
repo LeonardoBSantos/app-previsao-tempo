@@ -1,19 +1,8 @@
-﻿using Application.Model;
-using Application.Services;
-using Domain.DTO;
+﻿using Application.Services;
 using Domain.Entities;
 using Domain.IAdapters;
-using Domain.IServices;
-using InfraDataBase.Repositories;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WeatherForecastApi.Controllers;
 
 namespace WeatherForecastTests.ServiceTests
 {

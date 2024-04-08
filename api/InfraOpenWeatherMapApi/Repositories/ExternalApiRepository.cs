@@ -1,21 +1,18 @@
 ﻿using Domain.Entities;
 using Domain.IAdapters;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Microsoft.Extensions.Logging;
 using System.Net.Http.Headers;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace InfraExternalApi.Repositories
 {
     public class ExternalApiRepository: IExternalApiRepository
     {
+        private readonly ILogger<ExternalApiRepository> _logger;
         static HttpClient client = new HttpClient();
 
-        public ExternalApiRepository()
+        public ExternalApiRepository(ILogger<ExternalApiRepository> logger)
         {
+            _logger = logger;
             HttpClientInstanceInit();
         }
 
@@ -31,33 +28,50 @@ namespace InfraExternalApi.Repositories
                 }
                 return geocodingList;
             }
-            catch(Exception)
+            catch(Exception ex)
             {
+                _logger.LogError(ex.Message);
                 return null;
             }
            
         }
 
-        public async Task<CurrentWeatherEntity> GetCurrentWeatherAsync(string lat, string lon, string apiKey)
+        public async Task<CurrentWeatherEntity>? GetCurrentWeatherAsync(string lat, string lon, string apiKey)
         {
-            CurrentWeatherEntity currentWeather = null;
-            HttpResponseMessage response = await client.GetAsync($"data/2.5/weather?lat={lat}&lon={lon}&appid={apiKey}&units=metric&lang=pt_br");
-            if (response.IsSuccessStatusCode)
+            try
             {
-                currentWeather = await response.Content.ReadAsAsync<CurrentWeatherEntity>();
+                CurrentWeatherEntity currentWeather = null;
+                HttpResponseMessage response = await client.GetAsync($"data/2.5/weather?lat={lat}&lon={lon}&appid={apiKey}&units=metric&lang=pt_br");
+                if (response.IsSuccessStatusCode)
+                {
+                    currentWeather = await response.Content.ReadAsAsync<CurrentWeatherEntity>();
+                }
+                return currentWeather;
             }
-            return currentWeather;
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return null;
+            }
         }
 
-        public async Task<WeatherForecastEntity> Get5DaysWeatherForecastAsync(string lat, string lon, string apiKey)
+        public async Task<WeatherForecastEntity>? Get5DaysWeatherForecastAsync(string lat, string lon, string apiKey)
         {
-            WeatherForecastEntity weatherForecast = null;
-            HttpResponseMessage response = await client.GetAsync($"data/2.5/forecast?lat={lat}&lon={lon}&appid={apiKey}&units=metric&lang=pt_br");
-            if (response.IsSuccessStatusCode)
+            try
             {
-                weatherForecast = await response.Content.ReadAsAsync<WeatherForecastEntity>();
+                WeatherForecastEntity weatherForecast = null;
+                HttpResponseMessage response = await client.GetAsync($"data/2.5/forecast?lat={lat}&lon={lon}&appid={apiKey}&units=metric&lang=pt_br");
+                if (response.IsSuccessStatusCode)
+                {
+                    weatherForecast = await response.Content.ReadAsAsync<WeatherForecastEntity>();
+                }
+                return weatherForecast;
             }
-            return weatherForecast;
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return null;
+            }
         }
 
         private async static Task HttpClientInstanceInit()

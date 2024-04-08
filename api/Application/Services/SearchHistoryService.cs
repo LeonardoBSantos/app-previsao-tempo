@@ -1,12 +1,8 @@
-﻿using Domain.DTO;
+﻿using Application.Maps;
+using Domain.DTO;
 using Domain.Entities;
 using Domain.IAdapters;
 using Domain.IServices;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Services
 {
@@ -22,18 +18,8 @@ namespace Application.Services
         public List<SearchHistoryDto> GetHistory()
         {
             var searchHistoryList = _searchHistoryRepository.GetHistory();
-            var historyDto = new List<SearchHistoryDto>();
-            foreach (var searchHistory in searchHistoryList)
-            {
-                historyDto.Add(
-                    new SearchHistoryDto()
-                    {
-                        city_name = searchHistory.city_name,
-                        timestamp = searchHistory.timestamp
-                    });
-            }
 
-            return historyDto;
+            return HistoryServiceMap.MapToDto(searchHistoryList);
         }
 
         public async Task CreateHistoryAsync(string cityName)

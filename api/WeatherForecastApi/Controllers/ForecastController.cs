@@ -1,10 +1,9 @@
 using Application.Model;
-using Domain.DTO;
 using Domain.IServices;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Net;
-using System.Text.RegularExpressions;
+using WeatherForecastApi.Maps;
 using WeatherForecastApi.Utils;
 
 namespace WeatherForecastApi.Controllers
@@ -46,7 +45,7 @@ namespace WeatherForecastApi.Controllers
                     _logger.LogInformation("Clima Previsto obtido por consumo de API");
                     
                     var response = await _weatherForecastService.Get5DaysForecastAsync(cityName, apiKey);
-                    WeatherForecastModel forecastWeather = MapToWeatherForecastViewModel(response);
+                    WeatherForecastModel forecastWeather = ForecastControllerMap.MapToViewModel(response);
                     _cacheService.WriteCacheAsync(cityName, JsonConvert.SerializeObject(forecastWeather), Endpoint_NAME);
 
                     return Ok(forecastWeather);
@@ -70,29 +69,6 @@ namespace WeatherForecastApi.Controllers
                 _logger.LogError(ex.Message);
                 return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
             }
-        }
-
-        private WeatherForecastModel MapToWeatherForecastViewModel(WeatherForecastDto response)
-        {
-            var forecastViewModel = new WeatherForecastModel();
-            forecastViewModel.cidade = response.city_name;
-            forecastViewModel.unidades_de_medida = "Sistema Métrico";
-            forecastViewModel.listaDePrevisoes = new List<Previsao>();
-
-            foreach (var item in response.list)
-            {
-                forecastViewModel.listaDePrevisoes.Add(
-                    new Previsao()
-                    {
-                        data = item.dt_txt,
-                        descricao = item.description,
-                        temperatura = item.temp,
-                        umidade = item.humidity,
-                        velocidade_do_vento = item.speed
-                    });
-            }
-
-            return forecastViewModel;
         }
     }
 }

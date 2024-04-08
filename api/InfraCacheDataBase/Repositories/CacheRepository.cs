@@ -1,19 +1,17 @@
 ﻿using Domain.Entities;
 using Domain.IAdapters;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace InfraCacheDataBase.Repositories
 {
     public class CacheRepository : ICacheRepository
     {
+        private readonly ILogger<CacheRepository> _logger;
         private CacheDbContext _dbContext;
 
-        public CacheRepository()
+        public CacheRepository(ILogger<CacheRepository> logger)
         {
+            _logger = logger;
             _dbContext = new CacheDbContext();
         }
 
@@ -48,16 +46,24 @@ namespace InfraCacheDataBase.Repositories
 
         public async Task CleanCacheDb()
         {
-            var currentTable = _dbContext.Set<CurrentCacheEntity>();
-            var forecastTable = _dbContext.Set<ForecastCacheEntity>();
+            try
+            {
+                var currentTable = _dbContext.Set<CurrentCacheEntity>();
+                var forecastTable = _dbContext.Set<ForecastCacheEntity>();
 
-            currentTable.RemoveRange(currentTable);
-            forecastTable.RemoveRange(forecastTable);
+                currentTable.RemoveRange(currentTable);
+                forecastTable.RemoveRange(forecastTable);
 
-            _dbContext.SaveChanges();
+                _dbContext.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                throw;
+            }
         }
 
-        private void WriteToCurrentAsync(string cityName, string cacheData)
+        private async Task WriteToCurrentAsync(string cityName, string cacheData)
         {
             try
             {
@@ -71,6 +77,7 @@ namespace InfraCacheDataBase.Repositories
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex.Message);
                 throw;
             }
         }
@@ -89,20 +96,37 @@ namespace InfraCacheDataBase.Repositories
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex.Message);
                 throw;
             }
         }
 
         private async Task<CacheEntity> ReadFromCurrentAsync(string cityName)
         {
-            var cacheEntity = await _dbContext.current.FindAsync(cityName);
-            return cacheEntity;
+            try
+            {
+                var cacheEntity = await _dbContext.current.FindAsync(cityName);
+                return cacheEntity;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                throw;
+            }
         }
 
         private async Task<CacheEntity> ReadFromForecastAsync(string cityName)
         {
-            var cacheEntity = await _dbContext.forecast.FindAsync(cityName);
-            return cacheEntity;
+            try
+            {
+                var cacheEntity = await _dbContext.forecast.FindAsync(cityName);
+                return cacheEntity;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                throw;
+            }
         }
     }
 }

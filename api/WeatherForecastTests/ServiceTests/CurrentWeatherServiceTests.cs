@@ -1,10 +1,5 @@
-﻿using Domain.IServices;
-using Moq;
-using WeatherForecastApi.Controllers;
-using Microsoft.AspNetCore.Mvc;
-using Application.Model;
+﻿using Moq;
 using Microsoft.Extensions.Logging;
-using Domain.DTO;
 using Domain.IAdapters;
 using Domain.Entities;
 using Application.Services;
