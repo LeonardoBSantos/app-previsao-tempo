@@ -5,19 +5,23 @@ namespace WeatherForecastApi.Maps
 {
     public static class HistoryControllerMap
     {
-        public static List<SearchHistoryModel> MapToViewModel(List<SearchHistoryDto> response)
+        public static SearchHistoryModel MapToViewModel(List<SearchHistoryDto> response)
         {
-            var historyViewModel = new List<SearchHistoryModel>();
-
+            var hitoryList = new List<HistoryModel>();
             foreach (var item in response)
             {
-                historyViewModel.Add(
-                    new SearchHistoryModel()
+                hitoryList.Add(
+                    new HistoryModel()
                     {
                         cidade = item.city_name,
                         data = item.timestamp
                     });
             }
+
+            var historyViewModel = new SearchHistoryModel
+            {
+                lista_historico = hitoryList
+            };
 
             return historyViewModel;
         }
