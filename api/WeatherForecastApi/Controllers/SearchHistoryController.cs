@@ -1,10 +1,8 @@
 using Application.Model;
-using Domain.DTO;
 using Domain.IServices;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using System.Net;
-using System.Text.RegularExpressions;
+using WeatherForecastApi.Maps;
 
 namespace WeatherForecastApi.Controllers
 {
@@ -30,7 +28,7 @@ namespace WeatherForecastApi.Controllers
             try
             {
                 var response = _searchHistoryService.GetHistory();
-                List<SearchHistoryModel> history = MapToSearchHistoryViewModel(response);
+                var history = HistoryControllerMap.MapToViewModel(response);
 
                 return Ok(history);
             }
@@ -47,23 +45,6 @@ namespace WeatherForecastApi.Controllers
                 _logger.LogError(ex.Message);
                 return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
             }
-        }
-
-        private List<SearchHistoryModel> MapToSearchHistoryViewModel(List<SearchHistoryDto> response)
-        {
-            var historyViewModel = new List<SearchHistoryModel>();
-
-            foreach (var item in response)
-            {
-                historyViewModel.Add(
-                    new SearchHistoryModel()
-                    {
-                        cidade = item.city_name,
-                        data = item.timestamp
-                    });
-            }
-
-            return historyViewModel;
         }
     }
 }

@@ -4,11 +4,6 @@ using Domain.IServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WeatherForecastApi.Controllers;
 
 namespace WeatherForecastTests.ControllerTests
@@ -39,12 +34,16 @@ namespace WeatherForecastTests.ControllerTests
                 }
             };
 
-            var expectedViewModel = new List<SearchHistoryModel>()
+            var expectedViewModel = new SearchHistoryModel()
             {
-                new SearchHistoryModel()
+                lista_historico = new List<HistoryModel>()
                 {
-                    cidade = "London",
-                    data = DateTimeOffset.Now.ToString()
+                    new HistoryModel
+                    {
+                        cidade = "London",
+                        data = DateTimeOffset.Now.ToString()
+                    }
+                    
                 }
             };
 
@@ -57,10 +56,10 @@ namespace WeatherForecastTests.ControllerTests
             Assert.IsType<OkObjectResult>(result);
 
             var okResult = Assert.IsType<OkObjectResult>(result);
-            var view = Assert.IsType<List<SearchHistoryModel>>(okResult.Value);
+            var view = Assert.IsType<SearchHistoryModel>(okResult.Value);
             Assert.Equal(200, okResult.StatusCode);
-            Assert.Equal(expectedViewModel.ElementAt(0).cidade, view.ElementAt(0).cidade);
-            Assert.Equal(expectedViewModel.ElementAt(0).data, view.ElementAt(0).data);
+            Assert.Equal(expectedViewModel.lista_historico.ElementAt(0).cidade, view.lista_historico.ElementAt(0).cidade);
+            Assert.Equal(expectedViewModel.lista_historico.ElementAt(0).data, view.lista_historico.ElementAt(0).data);
 
         }
 
