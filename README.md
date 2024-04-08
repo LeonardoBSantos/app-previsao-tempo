@@ -90,23 +90,21 @@ A solução para esse problema é aguardar alguns instantes até que o site Open
 #### Exemplo de retorno:
 
 ```
-    [
-      {
-        "cidade": "São Paulo",
-        "data": "08/04/2024 06:32:52 -03:00"
-      },
-      {
-        "cidade": "São Paulo",
-        "data": "08/04/2024 06:33:57 -03:00"
-      },
-     
-      ...
+    {
+  "lista_historico": [
+    {
+      "cidade": "São Paulo",
+      "data": "08/04/2024 08:54:01 -03:00"
+    },
 
-      {
-        "cidade": "Santo André",
-        "data": "08/04/2024 06:40:14 -03:00"
-      }
-    ]
+    ...
+
+    {
+      "cidade": "Santos",
+      "data": "08/04/2024 08:54:06 -03:00"
+    }
+  ]
+}
 ```
 
 ### Exemplo de consulta de logs
