@@ -6,24 +6,24 @@ Este repositório contém uma API em .NET que consome APIs externas de previsão
 
 ## Requisitos Funcionais
 
-	1. *Endpoint para Consulta de Previsão do Tempo Atual:* A aplicação deve permitir ao usuário inserir o nome de uma cidade e, em seguida, exibir a previsão do tempo atual para essa cidade, incluindo temperatura, umidade, descrição do tempo (ensolarado, nublado, etc.), e velocidade do vento.
-	2. *Endpoint para Previsão do Tempo Estendida:* Além da previsão atual, a aplicação deve oferecer uma opção para visualizar a previsão estendida para os próximos 5 dias, mostrando as condições diárias esperadas.
-	3. *Endpoint para Histórico de Buscas:* A aplicação deve permitir que o histórico de buscas seja consultado, retornando o resumo das ultimas regiões visualizadas.
+1. **Endpoint para Consulta de Previsão do Tempo Atual:** A aplicação deve permitir ao usuário inserir o nome de uma cidade e, em seguida, exibir a previsão do tempo atual para essa cidade, incluindo temperatura, umidade, descrição do tempo (ensolarado, nublado, etc.), e velocidade do vento.
+2. **Endpoint para Previsão do Tempo Estendida:** Além da previsão atual, a aplicação deve oferecer uma opção para visualizar a previsão estendida para os próximos 5 dias, mostrando as condições diárias esperadas.
+3. **Endpoint para Histórico de Buscas:** A aplicação deve permitir que o histórico de buscas seja consultado, retornando o resumo das ultimas regiões visualizadas.
 
 ## Requisitos Não Funcionais
 
-	1. *Configuração:* Permitir que a chave API necessária para a consulta da API externa seja configurada facilmente, sem necessidade de alterações no código.
-	2. *Tratamento de Erros:* Implementar tratamento adequado de erros, incluindo erros de rede e erros retornados pela API externa.
-	3. *Cache:* Implementar Cache com banco de dados SQL para que as consultas feitas sejam armazenadas e que sejam evitadas novas chamadas para API.
-	4. *Testes unitários:* Implementar testes unitários com pelo menos 50% de cobertura.
-	5. *Serviço em Background para limpar o cache:* Criar um serviço em background que limpe o cache a cada 1h.
+1. **Configuração:** Permitir que a chave API necessária para a consulta da API externa seja configurada facilmente, sem necessidade de alterações no código.
+2. **Tratamento de Erros:** Implementar tratamento adequado de erros, incluindo erros de rede e erros retornados pela API externa.
+3. **Cache:** Implementar Cache com banco de dados SQL para que as consultas feitas sejam armazenadas e que sejam evitadas novas chamadas para API.
+4. **Testes unitários:** Implementar testes unitários com pelo menos 50% de cobertura.
+5. **Serviço em Background para limpar o cache:** Criar um serviço em background que limpe o cache a cada 1h.
 
 ## Decisões Técnicas
 
-	1. *Implementação da arquitetura hexagonal:* As interações desta api são: banco de dados de persistência do histórico, banco de cache, consumo de apis externas e interface de api. Concluí que essas interações com serviços externos se encaixam bem como adaptadores da arquitetura hexagonal, e a implementação desta arquitetura abre espaço para adicionarmos outras interações sem muita dificuldade como exemplo: um adaptador para observabilidade.
-	2. *Propriedade Limit da api geocoding:* Para sermos práticos, o endpoint da api externa que fornece os dados da latitude e longitude a partir do nome da cidade retorna apenas 1 ocorrência do nome digitado.
-	3. *Intervalo da previsão extendida:* O endpoint que retorna os dados da previsão para os próximos 5 dias retorna a temperatura para cada 3h dos próximos 5 dias.
-	4. *SQL Server InMemory:* Com a finalidade de abstrair esforços com infraestrutura de banco de dados e focar na criação da api decidi pelo uso de banco de dados InMemory. Desta forma, os dados persistidos possuem o escopo da execução desta api.
+1. **Implementação da arquitetura hexagonal:** As interações desta api são: banco de dados de persistência do histórico, banco de cache, consumo de apis externas e interface de api. Concluí que essas interações com serviços externos se encaixam bem como adaptadores da arquitetura hexagonal, e a implementação desta arquitetura abre espaço para adicionarmos outras interações sem muita dificuldade como exemplo: um adaptador para observabilidade.
+2. **Propriedade Limit da api geocoding:** Para sermos práticos, o endpoint da api externa que fornece os dados da latitude e longitude a partir do nome da cidade retorna apenas 1 ocorrência do nome digitado.
+3. **Intervalo da previsão extendida:** O endpoint que retorna os dados da previsão para os próximos 5 dias retorna a temperatura para cada 3h dos próximos 5 dias.
+4. **SQL Server InMemory:** Com a finalidade de abstrair esforços com infraestrutura de banco de dados e focar na criação da api decidi pelo uso de banco de dados InMemory. Desta forma, os dados persistidos possuem o escopo da execução desta api.
 
 ## Uso da Aplicação
 
