@@ -1,12 +1,8 @@
-﻿using Domain.DTO;
+﻿using Application.Maps;
+using Domain.DTO;
 using Domain.IAdapters;
 using Domain.IServices;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Services
 {
@@ -39,14 +35,7 @@ namespace Application.Services
                 throw new ApplicationException("Erro ao obter clima atual");
             }
 
-            return new CurrentWeatherDto
-            {
-                cityName = geocodingApiResponse.ElementAt(0).name,
-                description = currentWeatherApiResponse.weather.ElementAt(0).description,
-                humidity = currentWeatherApiResponse.main.humidity,
-                temp = currentWeatherApiResponse.main.temp,
-                speed = currentWeatherApiResponse.wind.speed
-            };
+            return CurrentServiceMap.MapToDto(geocodingApiResponse, currentWeatherApiResponse);
         }
     }
 }
