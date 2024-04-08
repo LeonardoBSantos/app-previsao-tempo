@@ -1,3 +1,8 @@
+using Application;
+using InfraCacheDataBase;
+using InfraDataBase;
+using InfraExternalApi;
+
 namespace WeatherForecastApi
 {
     public class Program
@@ -12,6 +17,10 @@ namespace WeatherForecastApi
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddApplicationModule();
+            builder.Services.addExternalApiModule();
+            builder.Services.addDataBaseModule();
+            builder.Services.addCacheDbModule();
 
             var app = builder.Build();
 

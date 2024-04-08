@@ -10,4 +10,11 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Application\Application.csproj" />
+    <ProjectReference Include="..\InfraCacheDataBase\InfraCacheDataBase.csproj" />
+    <ProjectReference Include="..\InfraDataBase\InfraDataBase.csproj" />
+    <ProjectReference Include="..\InfraOpenWeatherMapApi\InfraExternalApi.csproj" />
+  </ItemGroup>
+
 </Project>
