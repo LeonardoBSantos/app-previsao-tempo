@@ -13,13 +13,13 @@ using WeatherForecastApi.Controllers;
 
 namespace WeatherForecastTests.ControllerTests
 {
-    public class SearchHistoryControllerTets
+    public class SearchHistoryControllerTests
     {
         private readonly SearchHistoryController _searchHistoryController;
         private readonly Mock<ILogger<SearchHistoryController>> _loggerMock;
         private readonly Mock<ISearchHistoryService> _searchHistoryServiceMock;
 
-        public SearchHistoryControllerTets()
+        public SearchHistoryControllerTests()
         {
             _searchHistoryServiceMock = new Mock<ISearchHistoryService>();
             _loggerMock = new Mock<ILogger<SearchHistoryController>>();

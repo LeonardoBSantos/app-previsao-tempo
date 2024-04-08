@@ -8,7 +8,7 @@ using Domain.DTO;
 
 namespace WeatherForecastTests.ControllerTests
 {
-    public class CurrentWeatherControllerTets
+    public class CurrentWeatherControllerTests
     {
         private readonly CurrentWeatherController _currentWeatherController;
         private readonly Mock<ICurrentWeatherService> _currentWeatherServiceMock;
@@ -16,7 +16,7 @@ namespace WeatherForecastTests.ControllerTests
         private readonly Mock<ICacheService<CurrentWeatherModel>> _cacheServiceMock;
         private readonly Mock<ILogger<CurrentWeatherController>> _loggerMock;
 
-        public CurrentWeatherControllerTets()
+        public CurrentWeatherControllerTests()
         {
             _currentWeatherServiceMock = new Mock<ICurrentWeatherService>();
             _searchHistoryServiceMock = new Mock<ISearchHistoryService>();

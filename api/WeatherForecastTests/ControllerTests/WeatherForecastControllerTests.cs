@@ -13,7 +13,7 @@ using WeatherForecastApi.Controllers;
 
 namespace WeatherForecastTests.ControllerTests
 {
-    public class WeatherForecastControllerTets
+    public class WeatherForecastControllerTests
     {
         private readonly ForecastController _weatherForecastController;
         private readonly Mock<IWeatherForecastService> _weatherForecastServiceMock;
@@ -21,7 +21,7 @@ namespace WeatherForecastTests.ControllerTests
         private readonly Mock<ICacheService<WeatherForecastModel>> _cacheServiceMock;
         private readonly Mock<ILogger<ForecastController>> _loggerMock;
 
-        public WeatherForecastControllerTets()
+        public WeatherForecastControllerTests()
         {
             _weatherForecastServiceMock = new Mock<IWeatherForecastService>();
             _searchHistoryServiceMock = new Mock<ISearchHistoryService>();
