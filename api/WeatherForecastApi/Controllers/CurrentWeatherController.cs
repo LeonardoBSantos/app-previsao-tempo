@@ -1,10 +1,9 @@
 using Application.Model;
-using Domain.DTO;
 using Domain.IServices;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Net;
-using System.Text.RegularExpressions;
+using WeatherForecastApi.Maps;
 using WeatherForecastApi.Utils;
 
 namespace WeatherForecastApi.Controllers
@@ -44,7 +43,7 @@ namespace WeatherForecastApi.Controllers
                 {
                     _logger.LogInformation("Clima atual obtido por consumo de API");
                     var response = await _currentWeatherService.GetCurrentWeatherAsync(cityName, apiKey);
-                    var currentWeather = mapToCurrentWeatherViewModel(response);
+                    var currentWeather = CurrentControllerMap.mapToViewModel(response);
                     _cacheService.WriteCacheAsync(cityName, JsonConvert.SerializeObject(currentWeather), Endpoint_NAME);
 
                     return Ok(currentWeather);
@@ -69,19 +68,6 @@ namespace WeatherForecastApi.Controllers
                 _logger.LogError(ex.Message);
                 return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
             }
-        }
-
-        private CurrentWeatherModel mapToCurrentWeatherViewModel(CurrentWeatherDto response)
-        {
-            return new CurrentWeatherModel
-            {
-                cidade = response.cityName,
-                descricao = response.description,
-                temperatura = response.temp,
-                umidade = response.humidity,
-                velocidade_do_vento = response.speed,
-                unidades_de_medida = "Sistema Métrico"
-            };
         }
     }
 }
